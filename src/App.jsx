@@ -1,19 +1,24 @@
 import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Nav from './components/NavBar';
 import SideNav from './components/SideBar';
 import Body from './Body';
-import { Routes, Route } from 'react-router-dom';
-
+import Login from './Login';
+import Page from './pageNotFound';
 
 function App() {
+  const location = useLocation();
+  const isLoginRoute = location.pathname === '/Login';
   return (
     <>
-      <Nav />
+      {!isLoginRoute && <Nav />}
       <div className="flex">
-        <SideNav />
+        {!isLoginRoute && <SideNav />}
         <div className="flex-1">
           <Routes>
-          <Route path="/:buttonclicked" element={<Body />} />
+            <Route path="/:buttonclicked" element={<Body />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="*" element={<Page />} />
           </Routes>
         </div>
       </div>
